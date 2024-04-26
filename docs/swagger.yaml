@@ -1,0 +1,1044 @@
+basePath: /api
+definitions:
+  domain.AuthRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  domain.Book:
+    properties:
+      author:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      isbn:
+        type: string
+      language:
+        type: string
+      pages:
+        type: integer
+      price:
+        type: integer
+      published_at:
+        type: string
+      stock:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  domain.BookStoreRequest:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      isbn:
+        type: string
+      language:
+        type: string
+      pages:
+        type: integer
+      price:
+        type: integer
+      published_at:
+        type: string
+      stock:
+        type: integer
+      title:
+        type: string
+    required:
+    - author
+    - description
+    - isbn
+    - language
+    - pages
+    - price
+    - published_at
+    - stock
+    - title
+    type: object
+  domain.BookUpdateRequest:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      isbn:
+        type: string
+      language:
+        type: string
+      pages:
+        type: integer
+      price:
+        type: integer
+      published_at:
+        type: string
+      stock:
+        type: integer
+      title:
+        type: string
+    type: object
+  domain.CustomerStoreRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+    required:
+    - email
+    - name
+    - phone_number
+    type: object
+  domain.CustomerUpdateRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  domain.Error:
+    properties:
+      code:
+        type: integer
+      errors:
+        items:
+          type: string
+        type: array
+      message:
+        type: string
+    type: object
+  domain.Success:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  domain.TransactionDetail:
+    properties:
+      book:
+        $ref: '#/definitions/domain.Book'
+      book_id:
+        type: integer
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      quantity:
+        type: integer
+      sub_total:
+        type: integer
+      transaction_id:
+        type: integer
+      updatedAt:
+        type: string
+    required:
+    - book_id
+    - quantity
+    - sub_total
+    - transaction_id
+    type: object
+  domain.TransactionDetailStoreRequest:
+    properties:
+      book_id:
+        type: integer
+      quantity:
+        type: integer
+    required:
+    - book_id
+    - quantity
+    type: object
+  domain.TransactionStoreRequest:
+    properties:
+      customer_id:
+        type: integer
+      transaction_details:
+        items:
+          $ref: '#/definitions/domain.TransactionDetailStoreRequest'
+        type: array
+      user_id:
+        type: integer
+    required:
+    - customer_id
+    - transaction_details
+    - user_id
+    type: object
+  domain.TransactionUpdateRequest:
+    properties:
+      customer_id:
+        type: integer
+      transaction_details:
+        items:
+          $ref: '#/definitions/domain.TransactionDetail'
+        type: array
+      user_id:
+        type: integer
+    type: object
+  domain.UserStoreRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      role_id:
+        type: integer
+    required:
+    - email
+    - name
+    - password
+    - role_id
+    type: object
+  domain.UserUpdateRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      role_id:
+        type: integer
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  title: Book Store API Documentation
+  version: "1.0"
+paths:
+  /auth/token:
+    post:
+      consumes:
+      - application/json
+      description: Get JWT Token
+      parameters:
+      - description: user credential
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/domain.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get JWT Token
+      tags:
+      - auth
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: Get list of books
+      parameters:
+      - description: Page number (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Size of page (default 10)
+        in: query
+        name: size
+        type: integer
+      - description: Search query
+        in: query
+        name: q
+        type: string
+      - description: Filter by (title, author, price)
+        in: query
+        name: filterBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of books
+          schema:
+            items:
+              $ref: '#/definitions/domain.Success'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get list of book
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Store book
+      parameters:
+      - description: book data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/domain.BookStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: book detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Store book
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete book
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success delete book
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Delete book
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: Get book by id
+      parameters:
+      - description: book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: book detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get book by id
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update book
+      parameters:
+      - description: book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: book data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/domain.BookUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: book detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Update book
+      tags:
+      - books
+  /customers:
+    get:
+      consumes:
+      - application/json
+      description: Get list of customers
+      parameters:
+      - description: Page number (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Size of page (default 10)
+        in: query
+        name: size
+        type: integer
+      - description: Search query
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of customers
+          schema:
+            items:
+              $ref: '#/definitions/domain.Success'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get list of customer
+      tags:
+      - customers
+    post:
+      consumes:
+      - application/json
+      description: Store customer
+      parameters:
+      - description: customer data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CustomerStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: customer detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Store customer
+      tags:
+      - customers
+  /customers/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete customer
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success delete customer
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Delete customer
+      tags:
+      - customers
+    get:
+      consumes:
+      - application/json
+      description: Get customer by id
+      parameters:
+      - description: customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: customer detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get customer by id
+      tags:
+      - customers
+    put:
+      consumes:
+      - application/json
+      description: Update customer
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Customer data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CustomerUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Customer detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Update customer
+      tags:
+      - customers
+  /roles:
+    get:
+      consumes:
+      - application/json
+      description: Get list of roles
+      parameters:
+      - description: Page number (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Size of page (default 10)
+        in: query
+        name: size
+        type: integer
+      - description: Search query
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of roles
+          schema:
+            items:
+              $ref: '#/definitions/domain.Success'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get list of role
+      tags:
+      - roles
+  /roles/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get role by id
+      parameters:
+      - description: role ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: role detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get role by id
+      tags:
+      - roles
+  /transactions:
+    get:
+      consumes:
+      - application/json
+      description: Get list of transactions
+      parameters:
+      - description: Page number (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Size of page (default 10)
+        in: query
+        name: size
+        type: integer
+      - description: Customer Id
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of transactions
+          schema:
+            items:
+              $ref: '#/definitions/domain.Success'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get list of transaction
+      tags:
+      - transactions
+    post:
+      consumes:
+      - application/json
+      description: Store transaction
+      parameters:
+      - description: transaction data
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TransactionStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: transaction detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Store transaction
+      tags:
+      - transactions
+  /transactions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete transaction
+      parameters:
+      - description: transaction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success delete transaction
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Delete transaction
+      tags:
+      - transactions
+    get:
+      consumes:
+      - application/json
+      description: Get transaction by id
+      parameters:
+      - description: transaction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: transaction detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get transaction by id
+      tags:
+      - transactions
+    put:
+      consumes:
+      - application/json
+      description: Update transaction
+      parameters:
+      - description: transaction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: transaction data
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TransactionUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: transaction detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Update transaction
+      tags:
+      - transactions
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get list of users
+      parameters:
+      - description: Page number (default 1)
+        in: query
+        name: page
+        type: integer
+      - description: Size of page (default 10)
+        in: query
+        name: size
+        type: integer
+      - description: Search query
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            items:
+              $ref: '#/definitions/domain.Success'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get list of user
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Store user
+      parameters:
+      - description: user data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserStoreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: user detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Store user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete User
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success delete user
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Delete User
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Get user by id
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: user detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      summary: Get user by id
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update user
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: user data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: user detail
+          schema:
+            $ref: '#/definitions/domain.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.Error'
+      security:
+      - Bearer: []
+      summary: Update user
+      tags:
+      - users
+schemes:
+- http
+- https
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
