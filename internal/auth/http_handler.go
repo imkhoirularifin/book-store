@@ -1,10 +1,10 @@
 package auth
 
 import (
-	"book-store/internal/domain"
-	"book-store/internal/middleware/validation"
-	"book-store/internal/utilities"
 	"errors"
+	"gramedia-service/internal/domain"
+	"gramedia-service/internal/middleware/validation"
+	"gramedia-service/internal/utilities"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"

@@ -1,11 +1,11 @@
 package utilities
 
 import (
-	"book-store/internal/config"
-	"book-store/internal/domain"
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"gramedia-service/internal/config"
+	"gramedia-service/internal/domain"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"

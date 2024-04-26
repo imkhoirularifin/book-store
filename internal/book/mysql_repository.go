@@ -1,7 +1,7 @@
 package book
 
 import (
-	"book-store/internal/domain"
+	"gramedia-service/internal/domain"
 
 	"gorm.io/gorm"
 )

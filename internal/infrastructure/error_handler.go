@@ -1,8 +1,8 @@
 package infrastructure
 
 import (
-	"book-store/internal/domain"
 	"errors"
+	"gramedia-service/internal/domain"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"book-store/internal/domain"
-	"book-store/internal/utilities"
 	"errors"
+	"gramedia-service/internal/domain"
+	"gramedia-service/internal/utilities"
 )
 
 type authService struct {

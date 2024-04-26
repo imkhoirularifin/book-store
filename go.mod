@@ -1,4 +1,4 @@
-module book-store
+module gramedia-service
 
 go 1.22.2
 

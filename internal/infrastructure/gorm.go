@@ -1,9 +1,9 @@
 package infrastructure
 
 import (
-	"book-store/internal/domain"
-	"book-store/internal/utilities"
 	"fmt"
+	"gramedia-service/internal/domain"
+	"gramedia-service/internal/utilities"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
