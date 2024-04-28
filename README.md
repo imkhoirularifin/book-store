@@ -20,7 +20,7 @@ ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
 openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 ```
 
-4. Copy Private Key and Public Key, and encode with base64 in [here](https://www.base64decode.org/)
+4. Copy Private Key and Public Key, and encode with base64 in [here](https://www.base64encode.org/)
 
 ## Environment
 
