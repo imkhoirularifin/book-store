@@ -25,7 +25,7 @@ func Run() {
 		ProxyHeader:           cfg.ProxyHeader,
 		DisableStartupMessage: true,
 		ErrorHandler:          defaultErrorHandler,
-		AppName:               "book-store",
+		AppName:               "gramedia-service",
 	})
 
 	app.Use(fiberzerolog.New(fiberzerolog.Config{
