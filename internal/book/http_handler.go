@@ -2,10 +2,10 @@ package book
 
 import (
 	"errors"
-	"gramedia-service/internal/domain"
-	"gramedia-service/internal/middleware/jwt"
-	"gramedia-service/internal/middleware/validation"
-	"gramedia-service/internal/utilities"
+	"book-store/internal/domain"
+	"book-store/internal/middleware/jwt"
+	"book-store/internal/middleware/validation"
+	"book-store/internal/utilities"
 	"strconv"
 	"time"
 

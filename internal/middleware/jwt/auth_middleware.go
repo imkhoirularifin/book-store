@@ -1,8 +1,8 @@
 package jwt
 
 import (
-	"gramedia-service/internal/domain"
-	"gramedia-service/internal/utilities"
+	"book-store/internal/domain"
+	"book-store/internal/utilities"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"

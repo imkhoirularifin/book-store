@@ -1,17 +1,17 @@
 package infrastructure
 
 import (
-	"gramedia-service/internal/auth"
-	"gramedia-service/internal/book"
-	"gramedia-service/internal/config"
-	"gramedia-service/internal/customer"
-	"gramedia-service/internal/domain"
-	"gramedia-service/internal/middleware/jwt"
-	"gramedia-service/internal/role"
-	"gramedia-service/internal/transaction"
-	"gramedia-service/internal/user"
-	"gramedia-service/internal/utilities"
-	"gramedia-service/pkg/xlogger"
+	"book-store/internal/auth"
+	"book-store/internal/book"
+	"book-store/internal/config"
+	"book-store/internal/customer"
+	"book-store/internal/domain"
+	"book-store/internal/middleware/jwt"
+	"book-store/internal/role"
+	"book-store/internal/transaction"
+	"book-store/internal/user"
+	"book-store/internal/utilities"
+	"book-store/pkg/xlogger"
 
 	"github.com/caarlos0/env/v10"
 	_ "github.com/joho/godotenv/autoload"

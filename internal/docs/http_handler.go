@@ -1,7 +1,7 @@
 package docs
 
 import (
-	"gramedia-service/docs"
+	"book-store/docs"
 
 	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"

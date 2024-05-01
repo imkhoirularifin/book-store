@@ -1,15 +1,15 @@
 package infrastructure
 
 import (
+	"book-store/internal/auth"
+	"book-store/internal/book"
+	"book-store/internal/customer"
+	"book-store/internal/docs"
+	"book-store/internal/role"
+	"book-store/internal/transaction"
+	"book-store/internal/user"
+	"book-store/pkg/xlogger"
 	"fmt"
-	"gramedia-service/internal/auth"
-	"gramedia-service/internal/book"
-	"gramedia-service/internal/customer"
-	"gramedia-service/internal/docs"
-	"gramedia-service/internal/role"
-	"gramedia-service/internal/transaction"
-	"gramedia-service/internal/user"
-	"gramedia-service/pkg/xlogger"
 
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
@@ -25,7 +25,7 @@ func Run() {
 		ProxyHeader:           cfg.ProxyHeader,
 		DisableStartupMessage: true,
 		ErrorHandler:          defaultErrorHandler,
-		AppName:               "gramedia-service",
+		AppName:               "book-store",
 	})
 
 	app.Use(fiberzerolog.New(fiberzerolog.Config{

@@ -1,7 +1,7 @@
 package role
 
 import (
-	"gramedia-service/internal/domain"
+	"book-store/internal/domain"
 
 	"gorm.io/gorm"
 )

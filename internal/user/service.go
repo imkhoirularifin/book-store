@@ -2,8 +2,8 @@ package user
 
 import (
 	"errors"
-	"gramedia-service/internal/domain"
-	"gramedia-service/internal/utilities"
+	"book-store/internal/domain"
+	"book-store/internal/utilities"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"

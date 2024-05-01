@@ -1,3 +1,7 @@
+# Book Store
+
+Personal project for learning purpose
+
 ## Getting Started
 
 1. To generate swagger docs, Install swag by using:

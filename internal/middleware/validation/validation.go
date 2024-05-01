@@ -1,7 +1,7 @@
 package validation
 
 import (
-	"gramedia-service/internal/domain"
+	"book-store/internal/domain"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"

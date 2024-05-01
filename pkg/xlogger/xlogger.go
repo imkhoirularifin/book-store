@@ -1,7 +1,7 @@
 package xlogger
 
 import (
-	"gramedia-service/internal/config"
+	"book-store/internal/config"
 	"os"
 	"time"
 

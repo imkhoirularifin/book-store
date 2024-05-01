@@ -1,8 +1,8 @@
 package main
 
-import "gramedia-service/internal/infrastructure"
+import "book-store/internal/infrastructure"
 
-// @title			Gramedia Service API Documentation
+// @title			Book Store API Documentation
 // @version		1.0
 // @host			localhost:3000
 // @BasePath		/api

@@ -4,8 +4,8 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"gramedia-service/internal/config"
-	"gramedia-service/internal/domain"
+	"book-store/internal/config"
+	"book-store/internal/domain"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"

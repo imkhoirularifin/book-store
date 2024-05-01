@@ -2,7 +2,7 @@ package customer
 
 import (
 	"errors"
-	"gramedia-service/internal/domain"
+	"book-store/internal/domain"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"

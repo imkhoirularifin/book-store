@@ -1,7 +1,7 @@
 package transaction
 
 import (
-	"gramedia-service/internal/domain"
+	"book-store/internal/domain"
 
 	"gorm.io/gorm"
 )

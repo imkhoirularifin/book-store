@@ -2,7 +2,7 @@ package role
 
 import (
 	"errors"
-	"gramedia-service/internal/domain"
+	"book-store/internal/domain"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
